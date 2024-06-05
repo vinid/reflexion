@@ -1,7 +1,7 @@
-python main.py \
+python3 main.py \
   --run_name "reflexion_leetcode_python3_gpt4_react_constraints_visible" \
   --root_dir "root" \
-  --dataset_path ./executors/leetcode_env/leetcode_dataset/data/humaneval/leetcode-hard-py-40-uncontaminated_tests.jsonl \
+  --dataset_path /home/vinid/projects/textgrad/textgrad/tasks/leetcode_hard_data/leetcode_with_tests_entry_points.jsonl \
   --strategy "reflexion" \
   --language "py" \
   --model "gpt-4" \

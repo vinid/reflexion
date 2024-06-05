@@ -101,7 +101,7 @@ class GPTChat(ModelBase):
 
 class GPT4(GPTChat):
     def __init__(self):
-        super().__init__("gpt-4")
+        super().__init__("gpt-4o")
 
 
 class GPT35(GPTChat):

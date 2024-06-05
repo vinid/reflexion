@@ -24,6 +24,7 @@ def run_reflexion(
     num_items = len(dataset)
     num_success = resume_success_count(dataset)
     for i, item in enumerate_resume(dataset, log_path):
+        iz_bad = False
         cur_pass = 0
         is_solved = False
         reflections = []
@@ -32,7 +33,7 @@ def run_reflexion(
         cur_func_impl = ""
         while cur_pass < pass_at_k and not is_solved:
             if is_leetcode:
-                tests_i = item['visible_tests']
+                tests_i = item['test']
             else:
                 tests_i = gen.internal_tests(item["prompt"], model, 1)
 
@@ -45,8 +46,12 @@ def run_reflexion(
 
             # if solved, exit early
             if is_passing:
-                is_passing = exe.evaluate(
-                    item["entry_point"], cur_func_impl, item["test"], timeout=10)
+                try:
+                    is_passing = exe.evaluate(
+                        item["task_id"], cur_func_impl, item["test"], timeout=10)
+                except:
+                    is_passing = False
+                    iz_bad=True
                 is_solved = is_passing
                 num_success += int(is_passing)
                 break
@@ -79,8 +84,13 @@ def run_reflexion(
 
                 # if solved, check if it passes the real tests, exit early
                 if is_passing or cur_iter == max_iters - 1:
-                    is_passing = exe.evaluate(
-                        item["entry_point"], cur_func_impl, item["test"], timeout=10)
+                    try:
+                        is_passing = exe.evaluate(
+                            item["task_id"], cur_func_impl, item["test"], timeout=10)
+                    except:
+                        is_passing = False
+                        iz_bad = True
+
                     if is_passing:
                         item["solution"] = cur_func_impl
                         is_solved = True
@@ -95,6 +105,10 @@ def run_reflexion(
         item["implementations"] = implementations
         item["test_feedback"] = test_feedback
         item["solution"] = cur_func_impl
+        if iz_bad:
+            item["is_bad"] = True
+        else:
+            item["is_bad"] = False
         write_jsonl(log_path, [item], append=True)
 
         print_v(

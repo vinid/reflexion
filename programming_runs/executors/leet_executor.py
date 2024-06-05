@@ -11,7 +11,7 @@ class LeetExecutor(Executor):
         from .leetcode_env.leetcode_env.utils import SubmissionFormatter
         from .leetcode_env.leetcode_env.leetcode_types import ProgrammingLanguage
         from .leetcode_env.leetcode_env.environment import LeetCodeEnv
-        assert isinstance(formatter, SubmissionFormatter)
+        print(formatter)
         assert isinstance(lang, ProgrammingLanguage)
         self.lang = lang
         self.executor = executor

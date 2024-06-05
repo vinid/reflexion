@@ -15,6 +15,7 @@ def generator_factory(lang: str) -> Generator:
 
 def model_factory(model_name: str) -> ModelBase:
     if model_name == "gpt-4":
+        print("running gpt-4o")
         return GPT4()
     elif model_name == "gpt-3.5-turbo":
         return GPT35()

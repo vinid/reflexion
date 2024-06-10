@@ -58,7 +58,10 @@ def gpt_chat(
     max_tokens: int = 1024,
     temperature: float = 0.0,
     num_comps=1,
+    seed=None,
 ) -> Union[List[str], str]:
+    print(f"Model::gpt_chat:: running with a seed: {seed}")
+
     response = openai.ChatCompletion.create(
         model=model,
         messages=[dataclasses.asdict(message) for message in messages],
@@ -68,6 +71,7 @@ def gpt_chat(
         frequency_penalty=0.0,
         presence_penalty=0.0,
         n=num_comps,
+        seed=seed,
     )
     if num_comps == 1:
         return response.choices[0].message.content  # type: ignore
@@ -91,17 +95,18 @@ class ModelBase():
 
 
 class GPTChat(ModelBase):
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, seed):
         self.name = model_name
         self.is_chat = True
+        self.seed = seed
 
     def generate_chat(self, messages: List[Message], max_tokens: int = 1024, temperature: float = 0.2, num_comps: int = 1) -> Union[List[str], str]:
-        return gpt_chat(self.name, messages, max_tokens, temperature, num_comps)
+        return gpt_chat(self.name, messages, max_tokens, temperature, num_comps, seed=self.seed)
 
 
 class GPT4(GPTChat):
-    def __init__(self):
-        super().__init__("gpt-4o")
+    def __init__(self, seed):
+        super().__init__("gpt-4o", seed)
 
 
 class GPT35(GPTChat):

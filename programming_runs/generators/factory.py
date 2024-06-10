@@ -13,10 +13,10 @@ def generator_factory(lang: str) -> Generator:
         raise ValueError(f"Invalid language for generator: {lang}")
 
 
-def model_factory(model_name: str) -> ModelBase:
+def model_factory(model_name: str, seed) -> ModelBase:
     if model_name == "gpt-4":
-        print("running gpt-4o")
-        return GPT4()
+        print("factory::model_factory:: using gpt-4o")
+        return GPT4(seed)
     elif model_name == "gpt-3.5-turbo":
         return GPT35()
     elif model_name == "starchat":

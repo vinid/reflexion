@@ -13,11 +13,14 @@ def run_reflexion(
     pass_at_k: int,
     log_path: str,
     verbose: bool,
+    seed: int,
     is_leetcode: bool = False
+
 ) -> None:
     exe = executor_factory(language, is_leet=is_leetcode)
     gen = generator_factory(language)
-    model = model_factory(model_name)
+    print(f"reflexion.py::run_reflection:: running with seed of {seed}")
+    model = model_factory(model_name, seed)
 
     print_v = make_printv(verbose)
 
@@ -49,7 +52,10 @@ def run_reflexion(
                 try:
                     is_passing = exe.evaluate(
                         item["task_id"], cur_func_impl, item["test"], timeout=10)
-                except:
+                except Exception as e:
+                    print("*************")
+                    print(e)
+                    print("*************")
                     is_passing = False
                     iz_bad=True
                 is_solved = is_passing
@@ -87,7 +93,10 @@ def run_reflexion(
                     try:
                         is_passing = exe.evaluate(
                             item["task_id"], cur_func_impl, item["test"], timeout=10)
-                    except:
+                    except Exception as e:
+                        print("*************")
+                        print(e)
+                        print("*************")
                         is_passing = False
                         iz_bad = True
 

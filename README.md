@@ -1,3 +1,14 @@
+# Reproducing Reflexion.
+
+Things changed:
+
+* https://github.com/GammaTauAI/leetcode-hard-gym/issues/19
+* https://github.com/GammaTauAI/leetcode-hard-gym/issues/20
+* Time out is at 15 seconds to align with our code
+* GPT is seeded
+
+
+
 # [NeurIPS 2023] Reflexion: Language Agents with Verbal Reinforcement Learning
 
 This repo holds the code, demos, and log files for [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) by Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, Shunyu Yao. 

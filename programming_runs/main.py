@@ -34,6 +34,8 @@ def get_args():
 
     parser.add_argument("--verbose", action='store_true',
                         help="To print live logs")
+
+    parser.add_argument("--seed", type=int)
     # TODO: implement this
     # parser.add_argument("--is_resume", action='store_true', help="To resume run")
     # parser.add_argument("--resume_dir", type=str, help="If resume, the logging directory", default="")
@@ -76,7 +78,7 @@ def main(args):
     # check if log path already exists
     log_dir = os.path.join(args.root_dir, args.run_name)
     log_path = os.path.join(
-        log_dir, f"{dataset_name}_{args.strategy}_{args.max_iters}_{args.model}_pass_at_k_{args.pass_at_k}_{args.language}.jsonl")
+        log_dir, f"{dataset_name}_{args.strategy}_{args.max_iters}_{args.model}_pass_at_k_{args.pass_at_k}_{args.language}_{args.seed}.jsonl")
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
@@ -115,7 +117,8 @@ pass@k: {args.pass_at_k}
         log_path=log_path,
         verbose=args.verbose,
         expansion_factor=args.expansion_factor,
-        is_leetcode=args.is_leetcode
+        is_leetcode=args.is_leetcode,
+        seed=args.seed
     )
 
     print(f"Done! Check out the logs in `{log_path}`")
